@@ -47,6 +47,8 @@ def get_parser():
                         default="data/BPE_with_comments_codes", help="Path to BPE codes.")
     parser.add_argument("--beam_size", type=int, default=1,
                         help="Beam size. The beams will be printed in order of decreasing likelihood.")
+    parser.add_argument("--input_src", type=str, default="",
+                        help="Input source file.")
 
     return parser
 
@@ -172,9 +174,15 @@ if __name__ == '__main__':
     # Initialize translator
     translator = Translator(params)
 
-    # read input code from stdin
-    src_sent = []
-    input = sys.stdin.read().strip()
+    # # read input code from stdin
+    # src_sent = []
+    # input = sys.stdin.read().strip()
+
+    # read input code by IO
+    input_file = params.input_src
+    file1 = open(input_file, "r")
+    input = file1.readlines()
+    input = "".join(input)
 
     with torch.no_grad():
         output = translator.translate(
