@@ -153,7 +153,8 @@ def init_distributed_mode(params):
     print(PREFIX + "Hostname       : %s" % socket.gethostname())
 
     # set GPU device
-    torch.cuda.set_device(params.local_rank)
+    # torch.cuda.set_device(params.local_rank)
+    print('Bypass cuda in slurm.py')
 
     # initialize multi-GPU
     if params.multi_gpu:

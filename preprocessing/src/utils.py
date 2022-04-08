@@ -195,11 +195,11 @@ def get_vocab_file(file_path, vocab):
 
 
 def binarize_for_XLM_file(file_path, vocab):
-    process = subprocess.run(f"python {XLM_PP} {vocab} {file_path}",
+    process = subprocess.run(f"python3 {XLM_PP} {vocab} {file_path}",
                              shell=True,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-    assert Path(f'{file_path}.pth').is_file and process.returncode == 0, f"failed to binarize for XLM the file {file_path} \n command: python {XLM_PP} {vocab} {file_path} "
+    assert Path(f'{file_path}.pth').is_file and process.returncode == 0, f"failed to binarize for XLM the file {file_path} \n command: python3 {XLM_PP} {vocab} {file_path} "
 
 
 def regroup_and_select_data(files, output, nlines=None):

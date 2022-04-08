@@ -66,14 +66,14 @@ def test_run_pipeline_locally_3_langs_with_comments():
                lang3=lang3, test_size=10, size_gb=0)
 
 
-def test_run_pipeline_submitit_3_langs_with_comments():
-    copy_and_clean_folder()
-    dataset = Dataset(root, lang1, lang2, keep_comments,
-                      test_size=10, lang3=lang3)
-    mp_executor = ProcessPoolExecutor()
-    cluster_ex1 = AutoExecutor(dataset.folder.joinpath('log'), cluster="local")
-    cluster_ex1.update_parameters()
-    cluster_ex2 = AutoExecutor(dataset.folder.joinpath('log'), cluster="local")
-    cluster_ex2.update_parameters()
-    preprocess_(dataset, lang_executor=mp_executor,
-                tok_executor=cluster_ex1, bpe_executor=cluster_ex2)
+# def test_run_pipeline_submitit_3_langs_with_comments():
+#     copy_and_clean_folder()
+#     dataset = Dataset(root, lang1, lang2, keep_comments,
+#                       test_size=10, lang3=lang3)
+#     mp_executor = ProcessPoolExecutor()
+#     cluster_ex1 = AutoExecutor(dataset.folder.joinpath('log'), cluster="local")
+#     cluster_ex1.update_parameters()
+#     cluster_ex2 = AutoExecutor(dataset.folder.joinpath('log'), cluster="local")
+#     cluster_ex2.update_parameters()
+#     preprocess_(dataset, lang_executor=mp_executor,
+#                 tok_executor=cluster_ex1, bpe_executor=cluster_ex2)
