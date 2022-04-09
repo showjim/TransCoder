@@ -21,9 +21,11 @@ def check_files_and_symlink_for_XLM(dataset, langs):
     suffixs = {"": "", ".functions_standalone": "_sa"}
     for lang in langs:
         for cat in ["", ".functions_standalone"]:
-            for i in range(8):
-                assert dataset.folder.joinpath(
-                    f"{lang}.train{dataset.suffix}.{i}{cat}.bpe.pth").is_file()
+            # for i in range(8):
+            #     assert dataset.folder.joinpath(
+            #         f"{lang}.train{dataset.suffix}.{i}{cat}.bpe.pth").is_file()
+            assert dataset.folder.joinpath(
+                f"{lang}.train{dataset.suffix}{cat}.bpe.pth").is_file()
             assert dataset.folder.joinpath(
                 f"{lang}.test{dataset.suffix}{cat}.bpe.pth").is_file()
             assert dataset.folder.joinpath(
@@ -65,7 +67,7 @@ def preprocess(root, lang1, lang2, keep_comments, local, lang3=None, test_size=1
         lang_executor=mp_executor, tok_executor=cluster_ex1, split_executor=cluster_ex2)
     dataset.train_bpe(ncodes=ncodes, size_gb=size_gb)
     dataset.apply_bpe(
-        f'train{dataset.suffix}.[01234567].tok', use_vocab=False, executor=cluster_ex2)
+        f'train{dataset.suffix}.tok', use_vocab=False, executor=cluster_ex2)
     dataset.apply_bpe(f'test{dataset.suffix}.tok',
                       use_vocab=False, executor=None)
     dataset.apply_bpe(f'valid{dataset.suffix}.tok',
@@ -74,7 +76,7 @@ def preprocess(root, lang1, lang2, keep_comments, local, lang3=None, test_size=1
     dataset.get_vocab(size_gb=size_gb)
 
     dataset.binarize_for_XLM(
-        f'train{dataset.suffix}.[0123456789].bpe', executor=cluster_ex2)
+        f'train{dataset.suffix}.bpe', executor=cluster_ex2)
     dataset.binarize_for_XLM(f'test{dataset.suffix}.bpe', executor=None)
     dataset.binarize_for_XLM(f'valid{dataset.suffix}.bpe', executor=None)
 
@@ -83,7 +85,7 @@ def preprocess(root, lang1, lang2, keep_comments, local, lang3=None, test_size=1
 
     #dataset.binarize_for_XLM(f'train{dataset.suffix}.[0123456789].functions_class.bpe', executor=cluster_ex2)
     dataset.binarize_for_XLM(
-        f'train{dataset.suffix}.[0123456789].functions_standalone.bpe', executor=cluster_ex2)
+        f'train{dataset.suffix}.functions_standalone.bpe', executor=cluster_ex2)
 
     dataset.binarize_for_XLM(
         f'test{dataset.suffix}.functions_*.bpe', executor=None)

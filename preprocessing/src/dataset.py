@@ -59,10 +59,13 @@ class Language:
                        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         subprocess.run(f"cat {all_tok} | head -n {2 * test_size} | tail -n {test_size}  > {self.folder.joinpath(f'test{suffix}.tok')}", shell=True, stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
-        split_len = int((n_lines - 2 * test_size) / 8)
+        split_len = int(n_lines - 2 * test_size) #int((n_lines - 2 * test_size) / 8)
         for n, i in zip(range(8), range(2 * test_size, n_lines, split_len)):
-            subprocess.run(f"cat {all_tok} | head -n {i + split_len} | tail -n {split_len}  > {self.folder.joinpath(f'train{suffix}.{n}.tok')}", shell=True, stdout=subprocess.PIPE,
-                           stderr=subprocess.PIPE)
+            # subprocess.run(f"cat {all_tok} | head -n {i + split_len} | tail -n {split_len}  > {self.folder.joinpath(f'train{suffix}.{n}.tok')}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(
+                f"cat {all_tok} | head -n {i + split_len} | tail -n {split_len}  > {self.folder.joinpath(f'train{suffix}.tok')}",
+                shell=True, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
 
         return n_lines, size_gb
 

@@ -171,11 +171,14 @@ def apply_bpe_file(file_path, output, codes, vocab=None):
 
 
 def learn_bpe_file(file_path, ncodes, codes):
+    print(file_path)
+    print( ncodes)
+    print( codes)
     process = subprocess.run(f"{FAST} learnbpe {ncodes} {file_path} > {str(codes)} ",
                              shell=True,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-    assert process.returncode == 0, f"failed to learn bpe on {str(file_path)}"
+    assert process.returncode == 0, f"{FAST} learnbpe {ncodes} {file_path} > {str(codes)} "
     assert Path(
         f"{str(codes)}").is_file, f"failed to output codes, cannot find codes {str(codes)}"
     if ncodes > 50000:
