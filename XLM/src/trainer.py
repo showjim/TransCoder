@@ -763,8 +763,9 @@ class Trainer(object):
         x, y, pred_mask = self.mask_out(x, lengths)
 
         # cuda
-        x, y, pred_mask, lengths, positions, langs = to_cuda(
-            x, y, pred_mask, lengths, positions, langs)
+        # x, y, pred_mask, lengths, positions, langs = to_cuda(
+        #     x, y, pred_mask, lengths, positions, langs)
+        # mask above code to use cpu only
 
         # forward / loss
         tensor = model('fwd', x=x, lengths=lengths,
