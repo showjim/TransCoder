@@ -96,7 +96,7 @@ class Language:
         if executor is None:
             executor = LocalExecutor()
         suffix = '.with_comments' if keep_comments else ''
-        files = list(self.folder.glob(f'train{suffix}.[01234567].tok'))
+        files = list(self.folder.glob(f'train{suffix}.tok'))
         files.append(self.folder.joinpath(f'test{suffix}.tok'))
         files.append(self.folder.joinpath(f'valid{suffix}.tok'))
         toks = [tok for tok in files if not (tok.with_suffix('.functions_standalone.tok').is_file(
@@ -112,9 +112,9 @@ class Language:
             executor = LocalExecutor()
         suffix = '.with_comments' if keep_comments else ''
         files = list(self.folder.glob(
-            f'train{suffix}.[01234567].functions_class.tok'))
+            f'train{suffix}.functions_class.tok'))
         files += list(self.folder.glob(
-            f'train{suffix}.[01234567].functions_standalone.tok'))
+            f'train{suffix}.functions_standalone.tok'))
         files.append(self.folder.joinpath(f'test{suffix}.functions_class.tok'))
         files.append(self.folder.joinpath(
             f'test{suffix}.functions_standalone.tok'))
@@ -190,7 +190,7 @@ class Dataset:
             f"regroup and select data for training bpe in {data_train_bpe} ...")
         regroup_and_select_data(
             files=[l.folder.glob(
-                f'train{self.suffix}.[01234567].tok') for l in self.langs],
+                f'train{self.suffix}.tok') for l in self.langs],
             nlines=nlines,
             output=data_train_bpe)
 
@@ -216,7 +216,7 @@ class Dataset:
         print(f"regroup and select data in {data_get_vocab} to get vocab ...")
         regroup_and_select_data(
             files=[self.folder.glob(
-                f'{l.l}.train{self.suffix}.[01234567].bpe') for l in self.langs],
+                f'{l.l}.train{self.suffix}.bpe') for l in self.langs],
             nlines=nlines,
             output=data_get_vocab)
         print(f"computing vocab on {data_get_vocab}...")
@@ -268,7 +268,7 @@ class Dataset:
 
         print("apply bpe on train ... ")
         self.apply_bpe(
-            f'train{self.suffix}.[01234567].functions_*.tok', use_vocab=False, executor=bpe_executor)
+            f'train{self.suffix}.functions_*.tok', use_vocab=False, executor=bpe_executor)
         print("apply bpe on test and valid ...")
         self.apply_bpe(f'test{self.suffix}.functions_*.tok',
                        use_vocab=False, executor=bpe_executor)

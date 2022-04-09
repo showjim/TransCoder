@@ -35,9 +35,11 @@ def check_files_and_symlink_for_XLM(dataset, langs):
     print("create symlinks for XLM ...")
     for lang in langs:
         for cat in ["", ".functions_standalone"]:
-            for i in range(8):
-                create_symlink(dataset.folder.joinpath(f"{lang}.train{dataset.suffix}.{i}{cat}.bpe.pth"),
-                               XLM_folder.joinpath(f"train.{lang}{suffixs[cat]}.{i}.pth"))
+            # for i in range(8):
+            #     create_symlink(dataset.folder.joinpath(f"{lang}.train{dataset.suffix}.{i}{cat}.bpe.pth"),
+            #                    XLM_folder.joinpath(f"train.{lang}{suffixs[cat]}.{i}.pth"))
+            create_symlink(dataset.folder.joinpath(f"{lang}.train{dataset.suffix}{cat}.bpe.pth"),
+                           XLM_folder.joinpath(f"train.{lang}{suffixs[cat]}.pth"))
             create_symlink(dataset.folder.joinpath(f"{lang}.test{dataset.suffix}{cat}.bpe.pth"),
                            XLM_folder.joinpath(f"test.{lang}{suffixs[cat]}.pth"))
             create_symlink(dataset.folder.joinpath(f"{lang}.valid{dataset.suffix}{cat}.bpe.pth"),
