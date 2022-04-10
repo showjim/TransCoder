@@ -55,7 +55,7 @@ def get_parser():
 
 class Translator:
     def __init__(self, params):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         reloaded = torch.load(params.model_path, map_location='cpu')
         reloaded['encoder'] = {(k[len('module.'):] if k.startswith('module.') else k): v for k, v in
                                reloaded['encoder'].items()}
@@ -95,15 +95,15 @@ class Translator:
         assert len(reloaded['decoder'].keys()) == len(
             list(p for p, _ in self.decoder.state_dict().items()))
 
-        self.encoder.to(device) #.cuda()
-        self.decoder.to(device) #cuda()
+        self.encoder.cuda()
+        self.decoder.cuda()
 
         self.encoder.eval()
         self.decoder.eval()
         self.bpe_model = fastBPE.fastBPE(os.path.abspath(params.BPE_path))
 
     def translate(self, input, lang1, lang2, n=1, beam_size=1, sample_temperature=None, device='cuda:0'):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         with torch.no_grad():
             assert lang1 in {'python', 'java', 'cpp'}, lang1
             assert lang2 in {'python', 'java', 'cpp'}, lang2
